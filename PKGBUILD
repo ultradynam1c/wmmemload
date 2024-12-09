@@ -2,7 +2,7 @@ pkgname=wmmemload
 pkgver=0.1.6
 pkgrel=8
 pkgdesc="WindowMaker dockapp to monitor memory and swap usage."
-arch=('i686' 'x86_64')
+arch=('i686' 'x86_64' 'aarch64')
 depends=('libxpm')
 license=('GPL')
 source=("http://archive.ubuntu.com/ubuntu/pool/universe/w/$pkgname/${pkgname}_${pkgver}.orig.tar.gz")
@@ -16,6 +16,10 @@ prepare() {
 
 build() {
   cd ${pkgname}-${pkgver}
+  rm config.guess
+  rm config.sub
+  wget -O config.guess 'https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD'
+  wget -O config.sub 'https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD'
   ./configure --prefix=/usr
   make
 }
